@@ -1,0 +1,140 @@
+class Plots
+{
+
+id: int
+name: string
+location: string
+hectares: float
+monitoringStartDate: date
+}
+
+http://localhost:3000/plots
+http://localhost:3000/plots/:id
+
+
+
+class Inspections 
+{
+
+id: int
+plotId: int
+observations: string
+recommendedActions: string
+cropStatus: string
+inspectionDate: date
+}
+
+http://localhost:3000/inspections
+
+
+
+
+
+View raiz: /home
+View Home es accesible desde la ruta de navegación /home
+
+La view de registro de inpección es accesible desde la ruta /plots/:id/inspections
+
+Las rutas se configuran usando el lazy loading
+
+
+Toolbar:
+A la izquierda el logo de Tend y a continuación texto "Sustainable Urban Farming"
+En el centro, la opción "Home".
+A la derecha, el i18n EN | ES.
+
+
+Vista Home:
+Muestra como título el texto "Home" y como contenido el texto "Welcome to Tend".
+Dentro de esta vista, se muestra la sección "Registered Plots" con un grid de datos que incluye las siguientes columnas por parcela registrada:
+
+
+o Id (id): numérico
+o Name (name): texto
+o Location (location): texto
+o Hectares (hectares): numérico
+o Inicio de Inspección (monitoringStartDate): fecha
+
+
+En cada fila del grid, debe haber un botón "Register Inspection" que redirige a /plots/:id/inspections
+Se debe validar que el monitoringStartDate no sea mayor a la fecha actual.
+
+
+Vista /plots/:id/inspections
+
+La vista muestra el título "Inspection Registration" y un formulario con los siguientes campos obligatorios:
+
+o Plot Id (plotId): campo de solo lectura que carga por defecto el valor “:id” de la ruta
+o Observations (observations): campo de texto
+o Recommended Actions (recommendedActions): campo de texto
+o Crop Status (cropStatus): select con las opciones “Good”, “Warning”, “Critical”
+
+Al hacer click en el botón "Register Inspection", el sistema valida que el plotId corresponde a un registro existente y envía la información al endpoint /inspections
+
+
+Si cropStatus es "Critical", se muestra un Toast de PrimeVue con mensaje "Critical Condition Detected. Immediate action required." y severity="warning".
+
+Si el registro se guarda correctamente, se muestra un Toast con mensaje "Inspection successfully registered." y severity="success".
+Después de registrar la inspección, el formulario se limpia, excepto el campo plotId, que mantiene su valor original.
+Se incluye un botón para regresar a Home.
+
+
+
+Adicionales
+
+La interfaz de usuario debe cumplir i18n y debe usar el preset PrimeVue: Aura
+
+
+
+Carpetas:
+
+public para home.component.vue
+
+shared para el http.service.js, app-toolbar y el page-not-found
+
+plot-management para componentes relacionados con plots e inspections
+
+
+
+
+
+
+
+
+
+Donde se ve que la vista raiz definida sea Home?
+Cómo se ve aplicado eso de que la vista home es accesible desde la ruta de navegación /home?
+Donde se comprueba eso de que la vista de registro de inspección sea vista en la ruta /plots/:id/inspections?
+
+Donde está el código que hace cumplir el que la información de los plots esté en https://localhost:3000/plots; un plot específico en https://localhost:3000/plots/:id y el registro de inspecciones en https://localhost:3000/inspections?
+
+Cómo se ve aplicado el lazy loading?
+
+
+Cómo se hizo lo de que haya en Home una sección funcional de Registered Plots, con botones y mensajes?
+Cómo redirige el botón de Register Inspection a la ruta /plots/:id/inspections; y cómo se valida que la fecha del monitoringStartDate no sea mayor a la fecha actual?
+
+
+Cómo envías las inspections al endpoint /inspections?
+Cómo se ve aplicado lo de que si el cropStatus es Critical, se muestre un Toast con un mensaje y se afecta el severity?
+Cómo se ve aplicado lo del Toast successfully registered?
+Cómo limpias el formulario pero manteniendo intacto el campo plotId?
+
+Cómo configuras el preset PrimeVue Aura y VueRouter?
+Qué descargas, según el material, se hacen para el proyecto, osea del material design y eso?
+
+
+
+Por cierto, el api de Logo Dev API es este: pk_Ew35ovWaQ2ibl50bQ8izJw
+
+
+
+
+
+Índice
+
+El .service.js va en application/services; los entities van en domain/model; los assemblers van en infrastructure/assemblers; los .resource.js van en infrastructure/model; los -api.service.js van en services; el plot-list y el inspection-registration van en presentation/components y presentation/pages respectivamente.
+
+
+
+
